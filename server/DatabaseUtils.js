@@ -14,70 +14,110 @@ connection.connect();
 function SelectQuery () {
     this.query;
     this.replace = {};
+    this.actions = {};
 
     this.select = (fields) => {
-        this.query = 'select '
-        for (let field of fieldsList) {
-            this.query += connection.escapeId(field) + ',';
+        if (!this.actions.select) {
+            this.actions.select = true;
+            this.query = 'select '
+            for (let field of fieldsList) {
+                this.query += connection.escapeId(field) + ',';
+            }
+            this.query.substring(0, this.query.length);
+            return this;
         }
-        this.query.substring(0, this.query.length);
-        return this;
     }
     this.from = (tableName) => {
-        this.query = this.query ? this.query : 'select *'
-        this.query += ' from ' + connection.escapeId(tableName);
-        return this;
+        if (!this.actions.from) {
+            this.actions.from = true;
+            this.query = this.query ? this.query : 'select *'
+            this.query += ' from ' + connection.escapeId(tableName);
+            return this;
+        }
     }
     this.where = (map) => {
-        this.query += ' where ?'
-        for (let key in map) {
-            this.replace[key] = map[key];
+        if (this.actions.from && !this.actions.where) {
+            this.actions.where = true;
+            this.query += ' where ?'
+            for (let key in map) {
+                this.replace[key] = map[key];
+            }
+            return this;
         }
-        return this;
     }
     // this.orderBy = (map) => {
 
     // }
     this.execute = () => {
-        connection.query(this.query, this.replace, (error, results, fields) => {
-            console.log(error);
-            console.log(results);
-        });
+        if (this.actions.from) {
+            connection.query(this.query, this.replace, (error, results, fields) => {
+                console.log(error);
+                console.log(results);
+            });
+        }
     }
 }
 
 function InsertQuery() {
     this.query;
-    this.replace = []
+    this.replace = [];
+    this.actions = {}
 
     this.into = (tableName) => {
-        this.query = 'insert into ' + connection.escapeId(tableName);
-        return this;
+        if (!this.actions.into) {
+            this.actions.into = true;
+            this.query = 'insert into ' + connection.escapeId(tableName);
+            return this;
+        }
     }
     this.fields = (list) => {
-        this.query += ' ( ?? )';
-        this.replace.push(list); 
-        return this;
+        if (this.actions.into && !this.actions.fields && !this.actions.values) {
+            this.actions.fields = true;
+            this.query += ' ( ?? )';
+            this.replace.push(list); 
+            return this;
+        }
     }
     this.values = (list) => {
-        this.query += ' values ( ? )';
-        this.replace.push(list); 
-        return this;
+        if (this.actions.into && !this.actions.values) {
+            this.actions.values = true;
+            this.query += ' values ( ? )';
+            this.replace.push(list); 
+            return this;
+        }
     }
     this.execute = () => {
-        connection.query(this.query, this.replace, (error, results, fields) => {
-            console.log(error);
-            console.log(results);
-        });
+        if (this.actions.into && this.actions.values) {
+            connection.query(this.query, this.replace, (error, results, fields) => {
+                console.log(error);
+                console.log(results);
+            });
+        }
     }
 }
 
 function UpdateQuery() {
-
+    this.query;
+    this.replace;
 }
 
-function RemoveQuery() {
+function DeleteQuery() {
+    this.query = 'delete from ';
+    this.replace = {};
 
+    this.from = (tableName) => {
+        this.query += connection.escapeId(tableName);
+        return this;
+    }
+    this.where = SelectQuery.where;
+    this.execute = () => {
+        if (this.actions.from && this.actions.where) {
+            connection.query(this.query, this.replace, (error, results, fields) => {
+                console.log(error);
+                console.log(results);
+            });
+        }
+    }
 }
 
 module.exports.selectQuery = () => {
@@ -86,4 +126,19 @@ module.exports.selectQuery = () => {
 
 module.exports.insertQuery = () => {
     return new InsertQuery();
+}
+
+module.exports.updateQuery = () => {
+    return new UpdateQuery();
+}
+
+module.exports.deleteQuery = () => {
+    return new DeleteQuery();
+}
+
+function putAll(to, from) {
+    for (key in from) {
+        to[key] = from[key];
+    }
+    return to;
 }
