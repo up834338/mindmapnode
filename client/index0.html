@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>plant-morph</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="dropdown.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <script type="text/javascript" src="databaseModel.js"></script>
+        <script type="text/javascript" src="dropdown.js"></script>
+    </head>
+    <body>
+        <div id='control-grid'>
+            <div class='pos-top-row'>
+                <div>
+                    <div id='main-menu' name='Node Actions'>
+                        <div>
+                            <div onclick='uiCreateNode();'>Create Node</div>
+                            <div onclick='uiCreateChild();'>Create Child</div>
+                            <div onclick='uiRemoveNode();'>Remove Node</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id='pinned-menu' name='Pinned'>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div id='search-bar'>
+                    <label>Search:</label>
+                    <input type='text' id='search-box'/>
+                </div>
+            </div>
+            <div id='map-area'></div>
+        </div>
+
+        <div class='dialog' id='create-node-dialog' name='create new node'>
+            <div class='dialog-grid' id='create-node-grid'>
+                <div class='field label'>parent</div>
+                <div class='field'><select id='newNodeParent'></select></div>
+                <div class='field label'>node type</div>
+                <div class='field'><select id='newNodeType'></select></div>
+                <div class='field label'>node name</div>
+                <div class='field'><input type='text' id='newNodeName'/></div>
+                <div class='field label' id='newNodeDesc'><textarea rows='11' cols='35' placeholder='description'></textarea></div>
+            </div>
+        </div>
+
+        <div class='dialog' id='node-detail-dialog' name='node details'>
+            <div class='dialog-grid' id='node-detail-grid'>
+                <div class='field label'>parent</div>
+                <div class='field'><input id='detailParent' name='parent' readonly/></div>
+                <div class='field label'>node type</div>
+                <div class='field'><input id='detailType' name='type' readonly/></div>
+                <div class='field label'>node name</div>
+                <div class='field editable'><input id='detailName' name='name'/></div>
+                <div class='field label' id='detailDesc'><textarea rows='12' cols='35' readonly></textarea></div>
+                <div><input type='button' value='Pin' onclick='pinNode();'/></div>
+            </div>
+        </div>
+    </body>
+</html>

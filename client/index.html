@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>plant-morph</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="dropdown.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script type="text/javascript" src="index2.js"></script>
+        <script type="text/javascript" src="databaseModel.js"></script>
+        <script type="text/javascript" src="dropdown.js"></script>
+    </head>
+    <body>
+        <div id='control-grid'>
+            <div class='pos-top-row'>
+                <div>
+                    <div id='main-menu' name='Node Actions'>
+                        <div>
+                            <div onclick='uiCreateNode();'>Create Node</div>
+                            <div onclick='uiCreateChild();'>Create Child</div>
+                            <div onclick='uiRemoveNode();'>Remove Node</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id='pinned-menu' name='Pinned'>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div id='search-bar'>
+                    <label>Search:</label>
+                    <input type='text' id='search-box'/>
+                </div>
+            </div>
+            <div id='map-area'></div>
+        </div>
+    </body>
+</html>

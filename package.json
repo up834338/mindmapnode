@@ -1,0 +1,19 @@
+{
+  "name": "mindmapserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "test"
+  },
+  "keywords": [
+    "mindmap"
+  ],
+  "author": "azzi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
