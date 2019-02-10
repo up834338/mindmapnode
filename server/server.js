@@ -1,16 +1,45 @@
 const express = require('express')
 const app = express()
-const nodeServices  = require('./NodeServices')
+const NodeServices  = require('./NodeServices')
+const bodyParser = require("body-parser");
 const port = 3000 
+const dir = 'C:/Users/ximas/Desktop/github/mindmapnode';
 
-app.get('/testsql', (req, res) => {
-    //db.selectQuery().from('node').where({name:'sami'}).execute()
-    //db.insertQuery().into('node').fields(['name', 'nodeTypeId', 'description']).values(['Trunk', 3, 'Main stem of a tree']).execute();
-    res.send('done');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/home', express.static('client/'))
+
+app.get('/home', (req, res) => {
+    res.sendFile(dir + '/client/index.html')
 })
 
-app.use('/home', express.static('client/', {extensions: ['html']}))
+app.post('/createUpdateNode', async (req, res) => {
+    let result = await NodeServices.createUpdateNode(req.body);
+    res.json(result);
+}) 
 
-app.get('/test', (req, res) => res.sendFile('/Users/ximas/Desktop/github/mindmapserver/client/index.html'))
+app.get('/listNodes', async (req, res) => {
+    let result = await NodeServices.listNodes();
+    res.json(result);
+})
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/listNodeTypes', async (req, res) => {
+    let result = await NodeServices.listNodeTypes();
+    res.json(result);
+})
+
+app.post('/getNode', async (req, res) => {
+    let result = await NodeServices.getNode(req.body);
+    res.json(result);
+})
+
+//delete node
+
+// page requests
+
+app.get('/createNodePage', (req, res) => {
+    res.sendFile(dir + '/pages/createNode.html');
+})
+
+app.listen(port, () => console.log(`listening on port ${port}!`))

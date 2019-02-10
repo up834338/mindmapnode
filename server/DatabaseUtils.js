@@ -48,11 +48,30 @@ function SelectQuery () {
     // this.orderBy = (map) => {
 
     // }
+    this.first = async () => {
+        let data = await this.execute();
+        if (data && data.length > 0) {
+            return data[0];
+        } else {
+            return {};
+        }
+    }
+    this.list = async () => {
+        let data = await this.execute();
+        if (data && data.length > 0) {
+            return data;
+        } else {
+            return [];
+        }
+    }
     this.execute = () => {
         if (this.actions.from) {
-            connection.query(this.query, this.replace, (error, results, fields) => {
-                console.log(error);
-                console.log(results);
+            return new Promise((resolve, reject) => {
+                connection.query(this.query, this.replace, (error, results, fields) => {
+                    console.log(error);
+                    // console.log(results);
+                    resolve(results);
+                });
             });
         }
     }
@@ -86,12 +105,15 @@ function InsertQuery() {
             return this;
         }
     }
-    this.execute = () => {
+    this.execute = async () => {
         if (this.actions.into && this.actions.values) {
-            connection.query(this.query, this.replace, (error, results, fields) => {
-                console.log(error);
-                console.log(results);
-            });
+            return new Promise((resolve, reject) => {
+                connection.query(this.query, this.replace, (error, results, fields) => {
+                    console.log(error);
+                    // console.log(results);
+                    resolve(results.insertId);
+                });
+            })
         }
     }
 }

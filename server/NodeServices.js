@@ -1,16 +1,18 @@
 const db  = require('./DatabaseUtils')
 
-module.exports.createUpdateNode = (ctx) => {
+module.exports.createUpdateNode = async ctx => {
     if (ctx.values) {
-        db.insertQuery()
+        let insertId = await db.insertQuery()
             .into('node')
             .fields(['name', 'nodeTypeId', 'description'])
             .values(ctx.values)
             .execute();
+
+        return insertId;
     }
 }
 
-module.exports.deleteNode = (ctx) => {
+module.exports.deleteNode = ctx => {
     if (ctx.where) {
         db.deleteQuery()
             .from('node')
@@ -19,10 +21,19 @@ module.exports.deleteNode = (ctx) => {
     }
 }
 
-module.exports.getNode = (ctx) => {
-
+module.exports.getNode = async ctx => {
+    if (ctx.where) {
+        return await db.selectQuery()
+            .from('node')
+            .where(ctx.where)
+            .first()
+    }
 }
 
-module.exports.getNodeList = (ctx) => {
-    
+module.exports.listNodes = async () => {
+    return await db.selectQuery().from('node').list();
+}
+
+module.exports.listNodeTypes = async () => {
+    return await db.selectQuery().from('node_type').list();
 }
