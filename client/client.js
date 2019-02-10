@@ -44,11 +44,11 @@ function getNode(where) {
 function createNodePopup() {
     fetch('/createNodePage').then(async data => {
         let html = await data.text();
-        let $dialog = $('#dialog') 
-        $dialog.dialog();
+        let $dialog = $('<div></div>'); 
+        $dialog.dialog({
+            height: 450,
+            width: 600
+        });
         $dialog.html(html);
     })
 }
-
-// make files for dialog boxes with template populating functions
-// move client functions here

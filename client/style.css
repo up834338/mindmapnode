@@ -3,30 +3,6 @@ body {
     font-size: 13.3px;
 }
 
-/* .ui-dialog {
-    border: 1px solid grey;
-    background-color: #8cf;
-}
-
-.ui-dialog-buttonpane {
-    background-color: #7ad;
-    padding: 10px;
-}
-
-.ui-dialog-titlebar {
-    background-color: #7ad;
-    padding: 10px;
-}
-
-.ui-button-icon-only {
-    text-align: right;
-    float: right;
-}
-
-.ui-dialog-title, .ui-dialog-content {
-    padding: 5px;
-} */
-
 .node {
     background-color: green;
     height: 78px;
@@ -116,11 +92,6 @@ body {
 .dialog {
     display: none;
 }
-
-/* .label {
-    text-align: right;
-    background-color: #7ad;
-} */
 
 .dialog-grid {
     display: grid;

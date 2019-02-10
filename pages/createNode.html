@@ -1,11 +1,39 @@
-<div id='create-node-dialog' name='create new node'>
-    <div class='dialog-grid' id='create-node-grid'>
-        <div>parent</div>
-        <div><select id='parentId'></select></div>
-        <div>node type</div>
-        <div><select id='nodeType'></select></div>
-        <div>node name</div>
-        <div><input type='text' id='name'/></div>
-        <div id='description'><textarea rows='11' cols='35' placeholder='description'></textarea></div>
+<style>
+    #create-node-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 100px) 300px;
+        grid-template-rows: repeat(2, 50px) 250px;
+        justify-items: center;
+        align-items: center;
+    }
+
+    #create-node-grid > div {
+        border: 1px solid;
+        padding: 5px;
+    }
+</style>
+
+<div id="create-node-grid" >
+    <div style="grid-column: 1 / span 2;"><input type="text" name="name" placeholder="name"/></div>
+    <div>
+        <select name="nodeType">
+            <option>type</option>
+        </select>
     </div>
+    <div style="grid-row: 2;">
+        sound
+    </div>
+    <div>
+        <img src="/content/pinned.svg" height="30px" width="30px">
+    </div>
+    <div style="grid-row: 2; grid-column: 3;">
+        <select id="parentId">
+            <option>parent</option>
+        </select>
+    </div>
+    <div style="grid-column: span 3"><textarea rows="11" cols="35" placeholder="description"></textarea></div>
+    <div style="grid-row: 1 / span 3; grid-column: 4;">
+        image
+    </div>
+    <div><input type="button" value="save"/></div>
 </div>

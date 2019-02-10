@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/home', express.static('client/'))
+app.use('/content', express.static('content/'))
 
 app.get('/home', (req, res) => {
     res.sendFile(dir + '/client/index.html')
