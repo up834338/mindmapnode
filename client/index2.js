@@ -233,16 +233,3 @@ function updateSearch(e) {
       }
     });
 }
-
-// animation to show node being pinned
-// db get like function for search
-
-// - move dialogues in separate html file
-// rework dialogues
-// put buttons in grid on dialogue
-
-// - move server functions into new file?
-
-
-// fix that random bug with node parent repop
-// u r creating ids before validation

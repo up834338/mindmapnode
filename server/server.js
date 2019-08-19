@@ -1,9 +1,11 @@
+'use-strict';
+require('env2')('.env');
 const express = require('express')
 const app = express()
 const NodeServices  = require('./NodeServices')
 const bodyParser = require("body-parser");
-const port = 3000 
-const dir = 'C:/Users/ximas/Desktop/github/mindmapnode';
+const port = process.env.SERVER_PORT
+const dir = process.env.SERVER_DIR;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,8 +23,9 @@ app.post('/createUpdateNode', async (req, res) => {
 }) 
 
 app.get('/listNodes', async (req, res) => {
-    let result = await NodeServices.listNodes();
-    res.json(result);
+    NodeServices.listNodes().then(data => {
+        res.json(data);
+    })
 })
 
 app.get('/listNodeTypes', async (req, res) => {

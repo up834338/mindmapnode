@@ -13,7 +13,9 @@
   "author": "azzi",
   "license": "ISC",
   "dependencies": {
+    "env2": "^2.2.2",
     "express": "^4.16.4",
+    "knex": "^0.19.2",
     "mysql": "^2.16.0"
   }
 }
